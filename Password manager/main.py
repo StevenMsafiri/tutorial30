@@ -8,6 +8,23 @@ import  json
 FONT = ("Arial", 10, "normal")
 
 
+def find_password():
+    website = web_input.get()
+    try:
+        with open("Password data.json", "r") as file:
+            data = json.load(file)
+
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No info found about entered website")
+
+    else:
+        if website in data:
+            messagebox.showinfo(title="website", message=f'email: {data[website]["email"]} \n'
+                                                       f'password: {data[website]["password"]}')
+        else:
+            messagebox.showinfo(title="Error", message="No info saved about entered website")
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # Password Generator Project
@@ -87,27 +104,30 @@ canvas.grid(column=1, row=0)
 web_label = Label(text="Website:", font=FONT)
 web_label.grid(column=0, row=1)
 
-web_input = Entry(width=40)
-web_input.grid(column=1, row=1, columnspan=2)
+web_input = Entry(width=28)
+web_input.grid(column=1, row=1)
 web_input.focus()
+
+search_button = Button(width=8, text="Search", font=("Arial", 8, "normal"), command=find_password)
+search_button.grid(column=2, row=1)
 
 mail_label = Label(text="Email/Username:", font=FONT)
 mail_label.grid(column=0, row=2)
 
-mail_input = Entry(width=40)
-mail_input.grid(column=1, row=2, columnspan=2)
+mail_input = Entry(width=28)
+mail_input.grid(column=1, row=2)
 mail_input.insert(0, "stevenmsafir@gmail.com")
 
 password_label = Label(text="Password:", font=FONT)
 password_label.grid(column=0, row=3)
 
-pass_input = Entry(width=30, show="*")
+pass_input = Entry(width=28, show="*")
 pass_input.grid(column=1, row=3)
 
 pass_button = Button(text="Generate", font=("Arial", 8, "normal"), command=generate_password)
 pass_button.grid(column=2, row=3)
 
-add_button = Button(text="Add", width=35, command=save_data)
+add_button = Button(text="Add", width=36, command=save_data)
 add_button.grid(column=1, row=4, columnspan=2)
 
 window.mainloop()
